@@ -40,7 +40,7 @@ class MovieList extends Component {
                         <Carousel.Item key={movie.title}>
                             <div>
                                 <LinkContainer to={'/movie/'+movie._id} onClick={()=>this.handleClick(movie)}>
-                                    <Nav.Link><Image className="image" src={movie.ImageUrl} thumbnail /></Nav.Link>
+                                    <Nav.Link><Image className="image" src={movie.imageUrl} thumbnail /></Nav.Link>
                                 </LinkContainer>
                             </div>
                             <Carousel.Caption>
