@@ -16,7 +16,7 @@ class MovieDetail extends Component {
 
         this.state = {
             details: {
-                title: this.props.movieTitle,
+                title: this.props.title,
                 review: "",
                 rating: 0
             },
