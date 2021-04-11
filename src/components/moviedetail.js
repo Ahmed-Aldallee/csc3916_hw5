@@ -69,7 +69,7 @@ class MovieDetail extends Component {
                 <Card.Body>
                     <Image
                         className="image"
-                        src={this.props.selectedMovie.imageUrl}
+                        src={this.props.selectedMovie.ImageUrl}
                         thumbnail
                     />
                 </Card.Body>
@@ -107,7 +107,7 @@ class MovieDetail extends Component {
                                 placeholder="Enter Rating"
                                 min="0"
                                 max="5"
-                                // id="review"
+
                             />
                         </Form.Group>
 
@@ -128,8 +128,7 @@ class MovieDetail extends Component {
         );
     };
 
-    // return <DetailInfo />;
-    // }
+
 }
 
 const mapStateToProps = (state) => {
