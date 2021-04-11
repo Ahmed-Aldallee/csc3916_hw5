@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {connect} from "react-redux";
 import {submitReview} from '../actions/movieActions';
-import { Form, Col, FormGroup, FormControl, Button, ControlLabel} from 'react-bootstrap';
+import { Form, Col, FormGroup, FormControl, Button} from 'react-bootstrap';
 
 
 class Review extends Component {
