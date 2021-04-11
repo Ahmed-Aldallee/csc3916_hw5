@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 import {Card, ListGroup, ListGroupItem } from 'react-bootstrap';
 import { BsStarFill } from 'react-icons/bs'
 import { Image } from 'react-bootstrap';
-import Review from './review';
+import PostReview from './postReview';
 
 class MovieDetail extends Component {
 
@@ -41,7 +41,7 @@ class MovieDetail extends Component {
 
 
                     <Card.Body>
-                        {this.props.selectedMovie.Reviews && this.props.selectedMovie.Reviews.map((review, i) =>
+                        {this.props.selectedMovie.reviewer_name && this.props.selectedMovie.review.map((review, i) =>
                             <p key={i}>
                                 <b>{review.username}</b>&nbsp; {review.review}
                                 &nbsp;  <BsStarFill /> {review.rating}

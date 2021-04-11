@@ -6,7 +6,7 @@ import {Image, Nav} from 'react-bootstrap';
 import { Carousel } from 'react-bootstrap';
 import { BsStarFill} from 'react-icons/bs'
 import {LinkContainer} from 'react-router-bootstrap';
-import Review from './review';
+import Review from './postReview';
 
 
 class MovieList extends Component {

@@ -72,28 +72,3 @@ export function fetchMovies() {
         }).catch((e) => console.log(e));
     }
 }
-
-export function submitReview(review, title){
-    const env = runtimeEnv();
-    return dispatch => {
-        //review.rating = parseInt(review.rating);
-        return fetch(`${env.REACT_APP_API_URL}/review/`, {
-            method:'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-                'Authorization': localStorage.getItem('token')
-            },
-            body: JSON.stringify(review),
-            mode: 'cors'})
-            .then((response) => {
-                if (!response.ok) {
-                    throw Error(response.statusText);
-                }
-                return response.json();
-            }).then(() =>{
-                dispatch(movieFetched(title));
-            })
-            .catch((e)=> console.log(e));
-    }
-}

@@ -9,18 +9,18 @@ class PostReview extends Component {
         this.updateEvent = this.updateEvent.bind(this);
         this.review = this.review.bind(this);
         this.state = {
-            details:{
+            reviewData:{
                 movie: movieIn.movie.title,
+                reviewer_name: 'default_test',
                 review: '',
-                reviewer: '',
-                rating:0
+                rating: ''
             }
         };
 
     }
 
     updateEvent(event){
-        let updateEvent = Object.assign({}, this.state.details);
+        let updateEvent = Object.assign({}, this.state.reviewData);
 
         if(event.target.id === 'rating_sec') {
             updateEvent.rating = event.target.value;
@@ -73,4 +73,4 @@ const mapStateToProps = state => {
     return{}
 };
 
-export default connect(mapStateToProps)(Review);
+export default connect(mapStateToProps)(PostReview);
