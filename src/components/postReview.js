@@ -42,7 +42,7 @@ const AddReview = (props) => {
         }
         const env = runtimeEnv();
 
-        let result = await fetch(`${env.REACT_APP_API_URL}/reviews`, {
+        let result = await fetch(`${env.REACT_APP_API_URL}/review`, {
             method: "POST",
             headers: {
                 Accept: "application/json",
