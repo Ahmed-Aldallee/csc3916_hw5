@@ -1,5 +1,7 @@
+
 import React, { Component } from "react";
-import { fetchMovie, postReview } from "../actions/movieActions";
+import { fetchMovie} from "../actions/movieActions";
+import{postReview} from "../actions/reviewActions";
 import { connect } from "react-redux";
 import { Card, ListGroup, ListGroupItem } from "react-bootstrap";
 import { BsStarFill } from "react-icons/bs";
@@ -14,16 +16,16 @@ class MovieDetail extends Component {
 
         this.state = {
             details: {
-                rating: 0,
+                title: this.props.movieTitle,
                 review: "",
+                rating: 0
             },
         };
     }
 
     componentDidMount() {
         const { dispatch } = this.props;
-        if (this.props.selectedMovie == null && this.props.title) {
-            console.log("movieId 2", this.props.title);
+        if (this.props.title && this.props.selectedMovie == null)  {
             dispatch(fetchMovie(this.props.title));
         }
     }
@@ -32,33 +34,32 @@ class MovieDetail extends Component {
         let updateDetails = Object.assign({}, this.state.details);
 
         updateDetails[event.target.id] = event.target.value;
-        console.log(event)
         this.setState({
             details: updateDetails
         });
     }
-
+    test=(event) => {
+        console.log(this.state)
+    }
     submitReview = async () => {
-        console.log("state", this.state);
-        if (!this.state.details.rating || !this.state.details.review) {
-            alert("Rating and review are required. ");
+
+        if (!this.state.details.review||!this.state.details.rating ) {
+            alert("Please make sure both fields are properly filled out");
             return;
         }
-
         const { dispatch } = this.props;
-        let response = await dispatch(
+        await dispatch(
             postReview({
-                title: this.props.selectedMovie.title,
-                rating: this.state.details.rating,
-                quote: this.state.details.review,
-                name: localStorage.getItem('username')
+                title: this.state.details.title,
+                review: this.state.details.review,
+                rating: this.state.details.rating
+
             })
         );
-        console.log('response', response)
-    };
 
+    };
     render() {
-        // const DetailInfo = () => {
+
         if (!this.props.selectedMovie) {
             return <div>Loading....</div>;
         }
@@ -67,62 +68,44 @@ class MovieDetail extends Component {
             <Card>
                 <Card.Header>Movie Detail</Card.Header>
                 <Card.Body>
-                    <Image
-                        className="image"
-                        src={this.props.selectedMovie.ImageUrl}
-                        thumbnail
-                    />
+                    <Image className="image" src={this.props.selectedMovie.ImageURL}/>
                 </Card.Body>
                 <ListGroup>
-                    <ListGroupItem>{this.props.selectedMovie.title}</ListGroupItem>
-                    <ListGroupItem>
-                        {this.props.selectedMovie.actors.map((actor, i) => (
-                            <p key={i}>
-                                <b>{actor.actorName}</b> {actor.characterName}
-                            </p>
-                        ))}
+                    <ListGroupItem><h4>{this.props.selectedMovie.title}</h4></ListGroupItem>
+                    <ListGroupItem>{this.props.selectedMovie.actors.map((actor, i) => (
+                        <p key={i}>
+                            <b>{actor.actorName}</b> {actor.characterName}
+                        </p>
+                    ))}
                     </ListGroupItem>
                     <ListGroupItem>
                         <h4>
-                            Average Rating {this.props.selectedMovie.averageRating}{" "}
+                            Average Rating {this.props.selectedMovie.averageRating}
                             <BsStarFill />
                         </h4>
                     </ListGroupItem>
                 </ListGroup>
                 <Card.Body>
                     <h5>Reviews</h5>
-                    {this.props.selectedMovie.reviews.map((review, i) => (
+                    {this.props.selectedMovie.Reviews.map((review, i) => (
                         <p key={i}>
-                            <b>{review.name}</b>&nbsp; {review.quote}
+                            <b>{review.name}</b>&nbsp; {review.review}
                             &nbsp; {review.rating} <BsStarFill />
                         </p>
                     ))}
+
                     <Form className="form-horizontal">
-                        <Form.Group controlId="rating">
-                            <Form.Label>Star Rating 0-5</Form.Label>
-                            <Form.Control
-                                onChange={this.updateDetails}
-                                value={this.state.details.rating}
-                                type="number"
-                                placeholder="Enter Rating"
-                                min="0"
-                                max="5"
-
-                            />
-                        </Form.Group>
-
                         <Form.Group controlId="review">
                             <Form.Label>Review</Form.Label>
-                            <Form.Control
-                                onChange={this.updateDetails}
-                                value={this.state.details.review}
-                                type="text"
-                                placeholder="Type your review"
-                                // id="rating"
-                            />
+                            <Form.Control onChange={this.updateDetails} value={this.state.details.review} type="text" placeholder="Enter your review Here"/>
                         </Form.Group>
-                        <Button onClick={this.submitReview}>Post Review</Button>
-                    </Form>{" "}
+
+                        <Form.Group controlId="rating">
+                            <Form.Label>Star Rating 0-5</Form.Label>
+                            <Form.Control onChange={this.updateDetails} value={this.state.details.rating} type="number" placeholder="Enter Rating" min="0" max="5"/>
+                        </Form.Group>
+                        <Button onClick={this.submitReview}>Post</Button>
+                    </Form>
                 </Card.Body>
             </Card>
         );

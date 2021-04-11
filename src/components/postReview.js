@@ -34,8 +34,8 @@ const AddReview = (props) => {
 
         try {
             if (!result.ok) {
-                // eslint-disable-next-line no-undef
-                throw Error(response.statusText);
+
+                throw Error(myBody.statusText);
             }
         } catch (error) {
             console.log("error", error);
