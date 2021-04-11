@@ -6,6 +6,8 @@ import {Image, Nav} from 'react-bootstrap';
 import { Carousel } from 'react-bootstrap';
 import { BsStarFill} from 'react-icons/bs'
 import {LinkContainer} from 'react-router-bootstrap';
+import Review from './review';
+
 
 class MovieList extends Component {
     constructor(props) {
@@ -42,6 +44,7 @@ class MovieList extends Component {
                                 <LinkContainer to={'/movie/'+movie._id} onClick={()=>this.handleClick(movie)}>
                                     <Nav.Link><Image className="image" src={movie.imageUrl} thumbnail /></Nav.Link>
                                 </LinkContainer>
+
                             </div>
                             <Carousel.Caption>
                                 <h3>{movie.title}</h3>
