@@ -1,76 +1,85 @@
-import React, { Component } from 'react';
-import {connect} from "react-redux";
-import { Form, FormLabel, FormControl, FormGroup, Col, Button} from 'react-bootstrap';
-// import { postNewReview } from '../actions/movieActions';
+import React, { useState } from "react";
+import { Form, Button } from "react-bootstrap";
+import runtimeEnv from "@mars/heroku-js-runtime-env";
 
-class PostReview extends Component {
-    constructor(movieIn){
-        super(movieIn);
-        this.updateEvent = this.updateEvent.bind(this);
-        this.review = this.review.bind(this);
-        this.state = {
-            reviewData:{
-                title: movieIn.movie.title,
-                name: 'default_test',
-                review: '',
-                rating: 0
-            }
+const AddReview = (props) => {
+    console.log("props", props);
+    const [rating, setRating] = useState(0);
+    const [review, setReview] = useState("");
+
+    let updateRating = (event) => {
+        // console.log('event', event)
+        setRating(event.target.value);
+    };
+
+    let updateReview = (event) => {
+        // console.log('event', event)
+        setReview(event.target.value);
+    };
+
+    let submitReview = async () => {
+        let myBody = {
+            title: props.movie.title,
+            name: localStorage.getItem("username"),
+            quote: review,
+            rating: rating,
         };
 
-    }
+        console.log("body", myBody);
 
-    updateEvent(event){
-        let updateEvent = Object.assign({}, this.state.reviewData);
-
-        if(event.target.id === 'rating_sec') {
-            updateEvent.rating = event.target.value;
-        }
-        if(event.target.id === 'review_sec') {
-            updateEvent.review = event.target.value;
+        if (!rating || !review) {
+            alert("Rating and review are required. ");
+            return;
         }
 
-        this.setState({
-            reviewData: updateEvent
+        try {
+            if (!result.ok) {
+                // eslint-disable-next-line no-undef
+                throw Error(response.statusText);
+            }
+        } catch (error) {
+            console.log("error", error);
+        }
+        const env = runtimeEnv();
+
+        let result = await fetch(`${env.REACT_APP_API_URL}/reviews`, {
+            method: "POST",
+            headers: {
+                Accept: "application/json",
+                "Content-Type": "application/json",
+                Authorization: localStorage.getItem("token"),
+            },
+            mode: "cors",
+            body: myBody,
         });
-    }
+    };
 
-    review() {
-        // const {dispatch} = this.props;
-        // dispatch(submitReview(this.state.reviewData, this.props.movie._id));
-    }
+    return (
+        <Form className="form-horizontal">
+            <Form.Group controlId="rating">
+                <Form.Label>Star Rating 0-5</Form.Label>
+                <Form.Control
+                    onChange={updateRating}
+                    value={rating}
+                    type="number"
+                    placeholder="Enter Rating"
+                    min="0"
+                    max="5"
+                />
+            </Form.Group>
 
-    render() {
-        return(
-            <Form horizontal>
-                <FormGroup controlId="rating_sec">
-                    <Col componentClass={FormLabel}>
-                        Enter a Rating:
-                    </Col>
-                    <Col>
-                        <FormControl as="textarea" required onChange={this.updateEvent} value={this.state.reviewData.rating}/>
-                    </Col>
-                </FormGroup>
-                <FormGroup controlId="review_sec">
-                    <Col componentClass={FormLabel}>
-                        Enter a Review
-                    </Col>
-                    <Col>
-                        <FormControl as="textarea" required onChange={this.updateEvent} value={this.state.reviewData.review}/>
-                    </Col>
-                </FormGroup>
-                <FormGroup>
-                    <Col>
-                        <Button onClick={this.review}>Post Your Review!</Button>
-                    </Col>
-                </FormGroup>
-            </Form>
-        );
-    }
-
-}
-
-const mapStateToProps = state => {
-    return{}
+            <Form.Group controlId="review">
+                <Form.Label>Review</Form.Label>
+                <Form.Control
+                    onChange={updateReview}
+                    value={review}
+                    type="text"
+                    placeholder="Type your review"
+                />
+            </Form.Group>
+            <Button onClick={submitReview}>Post Review</Button>
+        </Form>
+    );
 };
 
-export default connect(mapStateToProps)(PostReview);
+export default AddReview;
