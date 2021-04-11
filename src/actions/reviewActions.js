@@ -3,7 +3,7 @@ import runtimeEnv from '@mars/heroku-js-runtime-env';
 export function postReview(review) {
     const env = runtimeEnv();
     return dispatch => {
-        return fetch(`${env.REACT_APP_API_URL}review`, {
+        return fetch(`${env.REACT_APP_API_URL}/review`, {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
