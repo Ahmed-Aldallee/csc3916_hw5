@@ -76,7 +76,7 @@ export function fetchMovies() {
 export function submitReview(review, title){
     const env = runtimeEnv();
     return dispatch => {
-        review.rating = parseInt(review.rating);
+        //review.rating = parseInt(review.rating);
         return fetch(`${env.REACT_APP_API_URL}/review/`, {
             method:'POST',
             headers: {
@@ -92,7 +92,7 @@ export function submitReview(review, title){
                 }
                 return response.json();
             }).then(() =>{
-                dispatch(fetchMovie(title));
+                dispatch(movieFetched(title));
             })
             .catch((e)=> console.log(e));
     }
