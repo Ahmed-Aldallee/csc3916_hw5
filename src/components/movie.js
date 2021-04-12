@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux'
 import { fetchMovie } from "../actions/movieActions";
 import MovieDetail from "../components/moviedetail"
 
-// support routing
+
 
 function Movie(props) {
     const [selectedMovie] = useState(props.selectedMovie);
