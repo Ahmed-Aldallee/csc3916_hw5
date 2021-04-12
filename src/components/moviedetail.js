@@ -44,7 +44,7 @@ class MovieDetail extends Component {
     submitReview = async () => {
 
         if (!this.state.details.review||!this.state.details.rating ) {
-            alert("Please make sure both fields are properly filled out");
+            alert("You need to add both, rating and your review to submit.");
             return;
         }
         const { dispatch } = this.props;
@@ -97,12 +97,12 @@ class MovieDetail extends Component {
                     <Form className="form-horizontal">
                         <Form.Group controlId="review">
                             <Form.Label>Review</Form.Label>
-                            <Form.Control onChange={this.updateDetails} value={this.state.details.review} type="text" placeholder="Enter your review Here"/>
+                            <Form.Control onChange={this.updateDetails} value={this.state.details.review} type="text" placeholder="Review e.g"/>
                         </Form.Group>
 
                         <Form.Group controlId="rating">
                             <Form.Label>Star Rating 0-5</Form.Label>
-                            <Form.Control onChange={this.updateDetails} value={this.state.details.rating} type="number" placeholder="Enter Rating" min="0" max="5"/>
+                            <Form.Control onChange={this.updateDetails} value={this.state.details.rating} type="number" placeholder="Rating" min="0" max="5"/>
                         </Form.Group>
                         <Button onClick={this.submitReview}>Post</Button>
                     </Form>
